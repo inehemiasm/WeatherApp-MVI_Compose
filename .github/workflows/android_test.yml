@@ -1,0 +1,41 @@
+name: Release UI test
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: '*/2 * * * *'
+  workflow_run:
+    workflows: [Manual workflow]
+    types: [completed]
+
+jobs:
+  schedule-release-workflow-tests:
+    runs-on: ubuntu-latest
+    if: "contains(github.event_name, 'schedule')"
+    steps:
+      - run: echo 'schedule_release-workflow'
+      - run: echo ${{ github.event_name }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+  workflow-run-release-workflow-tests:
+    runs-on: ubuntu-latest
+    if: "contains(github.event_name, 'workflow_run') && github.event.workflow_run.conclusion == 'success'"
+    steps:
+      - run: echo 'The triggering workflow passed'
+      - run: echo ${{ github.event_name }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+  workflow-dispatch-release-workflow-tests:
+    runs-on: ubuntu-latest
+    if: "contains(github.event_name, 'workflow_dispatch')"
+    steps:
+      - run: echo 'workflow_dispatch_release tests'
+      - run: echo ${{ github.event_name }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}

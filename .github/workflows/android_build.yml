@@ -1,0 +1,72 @@
+name: Manual workflow
+
+on:
+  push:
+    branches: [ master, "*" ]
+  # Allows sending API requests to dispatch this workflow
+  workflow_dispatch:
+    inputs:
+      testClass:
+        description: 'Test Class'
+        required: true
+        default: "SmokeTest"
+        type: string
+        options:
+          - "SmokeTest"
+          - "ConnectTest"
+          - "ChatTest"
+      locale:
+        description: 'Choose a locale'
+        required: true
+        default: "en_us"
+        type: choice
+        options:
+          - "en_us"
+          - "de_de"
+          - "en_gb"
+      environment:
+        description: 'Environment to run tests against'
+        required: true
+        default: "prod"
+        type: choice
+        options:
+          - "prod"
+          - "qat2"
+      tags:
+        description: 'Test tags'
+        required: false
+        type: string
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  Run_UI_Test_Set:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: UI test for en_us
+          if: "contains(github.event.inputs.locale, 'en_us') || (!contains(github.event_name, 'workflow_dispatch'))"
+          run: echo "test_class:${TEST:-SmokeTests} locale:${LOCALE:-en_us} env:${ENV:-qat2}"
+          env:
+            TEST: ${{ github.event.inputs.testClass }}
+            LOCALE: ${{ github.event.inputs.locale }}
+            ENV: ${{ github.event.inputs.environment }}
+            EVENT_NAME: ${{ github.event_name }}
+#    Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # - uses: actions/checkout@v2
+      # - name: report file info
+      #   run: |
+      #     ./gradlew tasks
+      #     chmod u+x ./app/scripts/hellow=_world1.sh
+      #     ./app/scripts/hellow=_world1.sh
+
+
+#      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#      - uses: actions/checkout@v2
+#      - name: Run Spotless Check
+#        run: ./gradlew spotlessCheck
+#
+#      - name: Availible gradle tasks
+#        uses: vgaidarji/android-github-actions-build@v1.0.1
+#        with:
+#          args: ./gradlew tasks
+
