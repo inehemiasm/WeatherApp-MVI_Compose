@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    val repository: WeatherRepository,
-    val locationTracker: LocationTracker
+    private val repository: WeatherRepository,
+    private val locationTracker: LocationTracker
 ) : ViewModel() {
     var state by mutableStateOf(WeatherState())
         private set
@@ -24,7 +24,7 @@ class WeatherViewModel @Inject constructor(
         viewModelScope.launch {
             state = state.copy(
                 isLoading = true,
-                Error = null
+                error = null
             )
 
             locationTracker.getCurrentLocation()?.let { location ->
@@ -33,26 +33,24 @@ class WeatherViewModel @Inject constructor(
                         state = state.copy(
                             weatherInfo = result.data,
                             isLoading = false,
-                            Error = null
+                            error = null
                         )
                     }
                     is Resource.Error -> {
                         state = state.copy(
                             weatherInfo = null,
                             isLoading = false,
-                            Error = result.message
+                            error = result.message
                         )
                     }
                 }
-            }?: run {
+            } ?: run {
                 state = state.copy(
                     weatherInfo = null,
                     isLoading = false,
-                    Error = "Couldn't get location.. Please check permission or enable GPS"
+                    error = "Couldn't get location.. Please check permission or enable GPS"
                 )
-
             }
         }
     }
-
 }

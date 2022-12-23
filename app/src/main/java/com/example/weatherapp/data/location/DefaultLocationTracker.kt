@@ -2,7 +2,6 @@ package com.example.weatherapp.data.location
 
 import android.Manifest
 import android.app.Application
-import android.app.LocaleManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -18,7 +17,7 @@ import kotlin.coroutines.resume
 class DefaultLocationTracker @Inject constructor(
     val locationClient: FusedLocationProviderClient,
     val application: Application
-): LocationTracker {
+) : LocationTracker {
     override suspend fun getCurrentLocation(): Location? {
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
             application,
@@ -33,9 +32,9 @@ class DefaultLocationTracker @Inject constructor(
         val locationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
-        if(!isGpsEnabled || !hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission) {
+        if (!isGpsEnabled || !hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission) {
             return null
         }
 
@@ -58,10 +57,7 @@ class DefaultLocationTracker @Inject constructor(
                 addOnCanceledListener {
                     cont.cancel()
                 }
-
             }
-
-
         }
     }
 }

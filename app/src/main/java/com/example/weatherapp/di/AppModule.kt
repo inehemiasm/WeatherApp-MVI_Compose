@@ -2,6 +2,7 @@ package com.example.weatherapp.di
 
 import android.app.Application
 import com.example.weatherapp.data.remote.WeatherApi
+import com.example.weatherapp.networking.LoggingInterceptor
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.Module
@@ -22,6 +23,7 @@ object AppModule {
     fun providesWeatherApi(): WeatherApi {
         return Retrofit.Builder()
             .baseUrl("https://api.open-meteo.com/")
+            .client(LoggingInterceptor.loggingClient())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create()

@@ -1,6 +1,5 @@
 package com.example.weatherapp.presentation
 
-
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -22,8 +21,7 @@ fun WeatherDataDisplay(
     modifier: Modifier? = Modifier,
     textStyle: androidx.compose.ui.text.TextStyle,
     iconTint: Color = Color.White
-    ) {
-
+) {
     Row(
         modifier = Modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -33,11 +31,10 @@ fun WeatherDataDisplay(
             tint = iconTint,
             contentDescription = null,
             modifier = Modifier.size(25.dp)
-            )
+        )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = "$value$unit"
         )
-
     }
 }
