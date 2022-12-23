@@ -1,7 +1,5 @@
 package com.example.weatherapp.presentation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
@@ -48,9 +45,9 @@ fun WeatherCard(
             ) {
                 Text(
                     text = "Today ${
-                        data.time.format(
-                            DateTimeFormatter.ofPattern("HH:mm")
-                        )
+                    data.time.format(
+                        DateTimeFormatter.ofPattern("HH:mm")
+                    )
                     }",
                     modifier = Modifier.align(Alignment.End),
                     color = Color.White
