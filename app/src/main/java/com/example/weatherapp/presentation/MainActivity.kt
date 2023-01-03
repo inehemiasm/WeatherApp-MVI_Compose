@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.weatherapp.presentation.ui.theme.DarkBlue
 import com.example.weatherapp.presentation.ui.theme.DeepBlue
+import com.example.weatherapp.presentation.ui.theme.LightBlue
 import com.example.weatherapp.presentation.ui.theme.WeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(DarkBlue)
+                            .background(LightBlue)
                     ) {
                         WeatherCard(
                             state = viewModel.state,
