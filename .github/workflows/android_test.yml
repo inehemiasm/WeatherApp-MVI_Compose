@@ -3,8 +3,6 @@ name: Release UI test
 on:
   workflow_dispatch:
 
-  schedule:
-    - cron: '*/2 * * * *'
   workflow_run:
     workflows: [Manual workflow]
     types: [completed]
